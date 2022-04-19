@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Sprint0.ItemClass;
 
@@ -40,6 +41,10 @@ namespace Sprint0
         private Boolean compass;
         private Boolean boomerang;
         private Boolean clock;
+
+        private Rectangle currentB_slot;
+        private Rectangle currentB_slot_HUD;
+
 
         public int LevelNumber
         {
@@ -193,6 +198,18 @@ namespace Sprint0
             set { mapSquareY = value; }
         }
 
+        public Rectangle CurrentB_Slot
+        {
+            get { return currentB_slot; }
+            set { currentB_slot = value; }
+        }
+
+        public Rectangle CurrentB_Slot_HUD
+        {
+            get { return currentB_slot_HUD; }
+            set { currentB_slot_HUD = value; }
+        }
+
         public LinkInventory(Player player)
         {
             this.player = player;
@@ -200,7 +217,7 @@ namespace Sprint0
             rupeeCount = 0;
             keyCount = 0;
             bombCount = 0;
-            arrowCount = 0;
+            arrowCount = 10;
             heartCount = player.PlayerHp;
             heartContainerCount = (player.MaxHp)/2;
             levelNumber = 1;
@@ -228,6 +245,8 @@ namespace Sprint0
             boomerang = false;
             clock = false;
 
+            currentB_slot = new Rectangle(0, 0, 1, 1);
+            currentB_slot_HUD = new Rectangle(0, 0, 1, 1);
         }
 
         public void Update()

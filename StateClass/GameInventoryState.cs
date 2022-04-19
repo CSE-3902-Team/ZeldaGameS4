@@ -29,14 +29,21 @@ namespace Sprint0.StateClass
         private Rectangle mapSourceRect;
         private Rectangle mapDesignSourceRect;
         private Rectangle compassSourceRect;
+        private Rectangle redBoxSourceRect;
+        private Rectangle blueBoxSourceRect;
+        private Rectangle swordSourceRect;
+        private Rectangle boomerangSourceRect;
+        private Rectangle bombSourceRect;
+        private Rectangle arrowSourceRect;
+        private Rectangle bowSourceRect;
 
         private Rectangle currentHeartNeeded;
         private Rectangle rupeeNumberDestRect;
         private Rectangle bombNumberDestRect;
         private Rectangle keyNumberDestRect;
         private Rectangle levelNumberDestRect;
-        private Rectangle slotA;
-        private Rectangle slotB;
+        private Rectangle slotADestRect;
+        private Rectangle slotBDestRect;
         private Rectangle mapDestRect;
         private Rectangle mapDesignDestRect;
         private Rectangle compassDestRect;
@@ -44,6 +51,8 @@ namespace Sprint0.StateClass
         private Rectangle otherMapDestRect;
         private Rectangle locationSquareSourceRect;
         private Rectangle locationSquareDestRect;
+        private Rectangle boxDestRect;
+        private Rectangle currentB_SlotItem;
 
         const int heartWidth = 64;
         const int heartHeight = 73;
@@ -62,8 +71,29 @@ namespace Sprint0.StateClass
 
         const int locationSquareSize = 20;
 
-        const int slotWidth = 40;
-        const int slotHeight = 75;
+        const int slotWidth = 46;
+        const int slotHeight = 85;
+        const int inventorySlotsWidth = 78;
+        const int inventorySlotsHeight = 65;
+        const int spaceBetweenSlots = 10;
+
+        const int colorBoxesWidth = 80;
+        const int colorBoxesHeight = 82;
+
+        const int swordWidth = 41;
+        const int swordHeight = 85;
+
+        const int boomerangWidth = 40;
+        const int boomerangHeight = 60;
+
+        const int bombWidth = 50;
+        const int bombHeight = 75;
+
+        const int arrowWidth = 40;
+        const int arrowHeight = 85;
+
+        const int bowWidth = 50;
+        const int bowHeight = 90;
 
         const int heartAndNumberYSourceLocation = 1142;
         const int timesSymbolYSourceLocation = 1178;
@@ -75,17 +105,28 @@ namespace Sprint0.StateClass
         const int otherMapXSourceLocation = 288;
         const int locationSquareXSourceLocation = 395;
         const int locationSquareYSourceLocation = 1440;
+        const int itemsRowYSourceLocation = 961;
+        const int swordXSourceLocation = 173;
+        const int blueSquareXSourceLocation = 82;
+        const int boomerangXSourceLocation = 315;
+        const int bombXSourceLocation = 173;
+        const int arrowXSourceLocation = 475;
+        const int bowXSourceLocation = 556;
+        const int boomerangYSourceLocation = 972;
 
         const int heartXDestLocation = 706;
-        const int slotA_XDestLocation = 605;
-        const int slotB_XDestLocation = 509;
+        const int slotA_XDestLocation = 602;
+        const int slotB_XDestLocation = 506;
         const int numberXDestLocation = 384;
         const int mapAndCompassXDestLocation = 180;
         const int mapDesignXDestLocation = 500;
         const int levelNumberXDestLocation = 135;
         const int otherMapXDestLocation = 26;
+        const int inventorySlotsXDestLocation = 505;
+
+        const int inventorySlotsYDestLocation = 179;
         const int heartYDestLocation = 854;
-        const int slotsYDestLocation = 819;
+        const int slotsYDestLocation = 815;
         const int rupeeYDestLocation = 781;
         const int keyYDestLocation = 854;
         const int bombYDestLocation = 890;
@@ -95,8 +136,6 @@ namespace Sprint0.StateClass
         const int levelNumberYDestLocation = 707;
         const int otherMapYDestLocation = 748;
 
-        //private KeyboardController kController;
-        //private MouseController mController;
 
 
         public GameInventoryState(Game1 game, ContentManager content) : base(game, content)
@@ -117,18 +156,26 @@ namespace Sprint0.StateClass
             compassSourceRect = new Rectangle(compassXSourceLocation, compassAndMapYSourceLocation, compassWidth, mapAndCompassHeight);
             otherMapSourceRect = new Rectangle(otherMapXSourceLocation, mapDesignYSourceLocation, otherMapWidth, otherMapHeight);
             locationSquareSourceRect = new Rectangle(locationSquareXSourceLocation, locationSquareYSourceLocation, locationSquareSize, locationSquareSize);
+            redBoxSourceRect = new Rectangle(0, itemsRowYSourceLocation, colorBoxesWidth, colorBoxesHeight);
+            blueBoxSourceRect = new Rectangle(blueSquareXSourceLocation, itemsRowYSourceLocation, colorBoxesWidth, colorBoxesHeight);
+            swordSourceRect = new Rectangle(swordXSourceLocation, itemsRowYSourceLocation, swordWidth, swordHeight);
+            boomerangSourceRect = new Rectangle(boomerangXSourceLocation, boomerangYSourceLocation, boomerangWidth, boomerangHeight);
+            bombSourceRect = new Rectangle(bombXSourceLocation, itemsRowYSourceLocation, bombWidth, bombHeight);
+            arrowSourceRect = new Rectangle(arrowXSourceLocation, itemsRowYSourceLocation, arrowWidth, arrowHeight);
+            bowSourceRect = new Rectangle(bowXSourceLocation, itemsRowYSourceLocation, bowWidth, bowHeight);
 
             rupeeNumberDestRect = new Rectangle(numberXDestLocation, rupeeYDestLocation, numberWidth, numberHeight);
             bombNumberDestRect = new Rectangle(numberXDestLocation, bombYDestLocation, numberWidth, numberHeight);
             keyNumberDestRect = new Rectangle(numberXDestLocation, keyYDestLocation, numberWidth, numberHeight);
             levelNumberDestRect = new Rectangle(levelNumberXDestLocation, levelNumberYDestLocation, numberWidth, numberHeight);
-            slotA = new Rectangle(slotA_XDestLocation, slotsYDestLocation, slotWidth, slotHeight);
-            slotB = new Rectangle(slotB_XDestLocation, slotsYDestLocation, slotWidth, slotHeight);
+            slotADestRect = new Rectangle(slotA_XDestLocation, slotsYDestLocation, slotWidth, slotHeight);
+            slotBDestRect = new Rectangle(slotB_XDestLocation, slotsYDestLocation, slotWidth, slotHeight);
             mapDestRect = new Rectangle(mapAndCompassXDestLocation, mapYDestLocation, mapWidth, mapAndCompassHeight);
             mapDesignDestRect = new Rectangle(mapDesignXDestLocation, mapDesignYDestLocation, mapDesignHeightAndWidth, mapDesignHeightAndWidth);
             compassDestRect = new Rectangle(mapAndCompassXDestLocation, compassYDestLocation, compassWidth, mapAndCompassHeight);
             otherMapDestRect = new Rectangle(otherMapXDestLocation, otherMapYDestLocation, otherMapWidth, otherMapHeight);
             locationSquareDestRect = new Rectangle(locationSquareX, locationSquareY, locationSquareSize, locationSquareSize);
+            currentB_SlotItem = _inventory.CurrentB_Slot;
 
         }
         public override void loadContent()
@@ -166,6 +213,8 @@ namespace Sprint0.StateClass
             _game.SpriteBatch.Draw(screen, bombNumberDestRect, timesSymbolSourceRect, Color.White);
             _game.SpriteBatch.Draw(screen, keyNumberDestRect, timesSymbolSourceRect, Color.White);
             _game.SpriteBatch.Draw(screen, levelNumberDestRect, new Rectangle(numberXSourceLocation + (_inventory.LevelNumber * numberWidth) + (_inventory.LevelNumber * spaceBetweenNumbers), heartAndNumberYSourceLocation, numberWidth, numberHeight), Color.White);
+            _game.SpriteBatch.Draw(screen, slotADestRect, swordSourceRect, Color.White);
+            _game.SpriteBatch.Draw(screen, slotBDestRect, currentB_SlotItem, Color.White);
 
 
             int remainingNumberSpaces = 2;

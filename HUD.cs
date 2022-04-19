@@ -29,8 +29,14 @@ namespace Sprint0
         private Rectangle mapDestRect;
         private Rectangle locationSquareSourceRect;
         private Rectangle locationSquareDestRect;
-
-
+        private Rectangle swordSourceRect;
+        private Rectangle boomerangSourceRect;
+        private Rectangle bombSourceRect;
+        private Rectangle arrowSourceRect;
+        private Rectangle bowSourceRect;
+        private Rectangle slotADestRect;
+        private Rectangle slotBDestRect;
+        private Rectangle currentB_SlotItem;
 
         private int health;
         private int heartContainerCount;
@@ -58,6 +64,16 @@ namespace Sprint0
         const int bombYDestLocation = 182;
         const int numberXDestLocation = 383;
         const int levelNumberXDestLocation = 131;
+        const int itemsRowYSourceLocation = 330;
+        const int swordXSourceLocation = 173;
+        const int boomerangXSourceLocation = 315;
+        const int bombXSourceLocation = 173;
+        const int arrowXSourceLocation = 475;
+        const int bowXSourceLocation = 556;
+        const int boomerangYSourceLocation = 972;
+        const int slotA_XDestLocation = 600;
+        const int slotB_XDestLocation = 504;
+        const int slotsYDestLocation = 106;
 
         const int mapYSourceLocation = 518;
         const int mapWidth = 295;
@@ -68,6 +84,24 @@ namespace Sprint0
         const int locationSquareSize = 20;
         const int locationSquareXSourceLocation = 120;
         const int locationSquareYSourceLocation = 750;
+
+        const int slotWidth = 46;
+        const int slotHeight = 85;
+
+        const int swordWidth = 41;
+        const int swordHeight = 85;
+
+        const int boomerangWidth = 40;
+        const int boomerangHeight = 60;
+
+        const int bombWidth = 50;
+        const int bombHeight = 75;
+
+        const int arrowWidth = 40;
+        const int arrowHeight = 85;
+
+        const int bowWidth = 50;
+        const int bowHeight = 90;
 
         public int MapLocationX
         {
@@ -106,6 +140,11 @@ namespace Sprint0
             numberSourceRect = new Rectangle(numberXSourceLocation, heartAndNumberYSourceLocation, numberWidth, numberHeight);
             timesSymbolSourceRect = new Rectangle(numberXSourceLocation, (heartAndNumberYSourceLocation + numberHeight), numberWidth, numberHeight);
             mapSourceRect = new Rectangle(0, mapYSourceLocation, mapWidth, mapHeight);
+            swordSourceRect = new Rectangle(swordXSourceLocation, itemsRowYSourceLocation, swordWidth, swordHeight);
+            boomerangSourceRect = new Rectangle(boomerangXSourceLocation, boomerangYSourceLocation, boomerangWidth, boomerangHeight);
+            bombSourceRect = new Rectangle(bombXSourceLocation, itemsRowYSourceLocation, bombWidth, bombHeight);
+            arrowSourceRect = new Rectangle(arrowXSourceLocation, itemsRowYSourceLocation, arrowWidth, arrowHeight);
+            bowSourceRect = new Rectangle(bowXSourceLocation, itemsRowYSourceLocation, bowWidth, bowHeight);
 
             levelNumberDestRect = new Rectangle(levelNumberXDestLocation, 0, numberWidth, numberHeight);
             rupeeNumberDestRect = new Rectangle(numberXDestLocation, rupeeYDestLocation, numberWidth, numberHeight);
@@ -114,6 +153,9 @@ namespace Sprint0
             mapDestRect = new Rectangle(mapXDestLocation, mapYDestLocation, mapWidth, mapHeight);
             locationSquareSourceRect = new Rectangle(locationSquareXSourceLocation, locationSquareYSourceLocation, locationSquareSize, locationSquareSize);
             locationSquareDestRect = new Rectangle(locationSquareX, locationSquareY, locationSquareSize, locationSquareSize);
+            slotADestRect = new Rectangle(slotA_XDestLocation, slotsYDestLocation, slotWidth, slotHeight);
+            slotBDestRect = new Rectangle(slotB_XDestLocation, slotsYDestLocation, slotWidth, slotHeight);
+            currentB_SlotItem = inventory.CurrentB_Slot_HUD;
 
         }
 
@@ -139,7 +181,8 @@ namespace Sprint0
             spriteBatch.Draw(headsUpDisplay, bombNumberDestRect, timesSymbolSourceRect, Color.White);
             spriteBatch.Draw(headsUpDisplay, keyNumberDestRect, timesSymbolSourceRect, Color.White);
             spriteBatch.Draw(headsUpDisplay, levelNumberDestRect, new Rectangle(numberXSourceLocation + (levelNumber*numberWidth) + (levelNumber*spaceBetweenNumbers), heartAndNumberYSourceLocation, numberWidth, numberHeight), Color.White);
-
+            spriteBatch.Draw(headsUpDisplay, slotADestRect, swordSourceRect, Color.White);
+            spriteBatch.Draw(headsUpDisplay, slotBDestRect, currentB_SlotItem, Color.White);
 
             int remainingNumberSpaces = 2;
             for(int i = 1; i <= remainingNumberSpaces; i++)
