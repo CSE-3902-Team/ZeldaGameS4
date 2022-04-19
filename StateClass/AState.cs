@@ -26,9 +26,21 @@ namespace Sprint0
         protected bool isVictory = false;
         protected bool isGameState = false;
         protected bool animate = false;
+        protected int boxPositionX;
+        protected int boxPositionY;
 
 
-        
+        public int BoxPositionX
+        {
+            get { return boxPositionX; }
+            set { boxPositionX = value; }
+        }
+
+        public int BoxPositionY
+        {
+            get { return boxPositionY; }
+            set { boxPositionY = value; }
+        }
         public Room CurrentRoom
         {
             get { return _currentRoom;  }
@@ -63,6 +75,8 @@ namespace Sprint0
         {
             _game = game;
             _content = content;
+            boxPositionX = 505;
+            boxPositionY = 180;
         }
 
         public abstract void loadContent();

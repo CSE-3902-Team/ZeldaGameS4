@@ -122,9 +122,7 @@ namespace Sprint0.StateClass
         const int mapDesignXDestLocation = 500;
         const int levelNumberXDestLocation = 135;
         const int otherMapXDestLocation = 26;
-        const int inventorySlotsXDestLocation = 505;
-
-        const int inventorySlotsYDestLocation = 179;
+        
         const int heartYDestLocation = 854;
         const int slotsYDestLocation = 815;
         const int rupeeYDestLocation = 781;
@@ -136,7 +134,7 @@ namespace Sprint0.StateClass
         const int levelNumberYDestLocation = 707;
         const int otherMapYDestLocation = 748;
 
-
+        private int frame;
 
         public GameInventoryState(Game1 game, ContentManager content) : base(game, content)
         {
@@ -175,7 +173,10 @@ namespace Sprint0.StateClass
             compassDestRect = new Rectangle(mapAndCompassXDestLocation, compassYDestLocation, compassWidth, mapAndCompassHeight);
             otherMapDestRect = new Rectangle(otherMapXDestLocation, otherMapYDestLocation, otherMapWidth, otherMapHeight);
             locationSquareDestRect = new Rectangle(locationSquareX, locationSquareY, locationSquareSize, locationSquareSize);
+            boxDestRect = new Rectangle(BoxPositionX, BoxPositionY, inventorySlotsWidth, inventorySlotsHeight);
             currentB_SlotItem = _inventory.CurrentB_Slot;
+
+            frame = 0;
 
         }
         public override void loadContent()
@@ -188,11 +189,12 @@ namespace Sprint0.StateClass
         {
             _game.MouseController.handleInput();
             _game.KeyboardController.handleInput();
-
+            boxDestRect = new Rectangle(BoxPositionX, BoxPositionY, inventorySlotsWidth, inventorySlotsHeight);
         }
 
         public override void Draw(GameTime gameTime)
         {
+            frame++;
             _inventory.Update();
             Rectangle screenDestRect = new Rectangle(0, 0, WIDTH, HEIGHT);
             Rectangle screenSrcRect = new Rectangle(0, 0, WIDTH, HEIGHT);
@@ -216,6 +218,10 @@ namespace Sprint0.StateClass
             _game.SpriteBatch.Draw(screen, slotADestRect, swordSourceRect, Color.White);
             _game.SpriteBatch.Draw(screen, slotBDestRect, currentB_SlotItem, Color.White);
 
+            if(frame % 50 > 20)
+            {
+                _game.SpriteBatch.Draw(screen, boxDestRect, redBoxSourceRect, Color.White);
+            }
 
             int remainingNumberSpaces = 2;
             for (int i = 1; i <= remainingNumberSpaces; i++)

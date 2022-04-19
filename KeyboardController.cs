@@ -49,11 +49,8 @@ namespace Sprint0 {
 		public void handleInput() {
 			previousState = kstate;
 			kstate = Keyboard.GetState();
-			
 				
-				if (HasBeenPressed(Keys.U)) {
-			}
-			else if (HasBeenPressed(Keys.I))
+			if (HasBeenPressed(Keys.I))
 			{
 				if (inventoryOpen)
 				{
@@ -76,26 +73,70 @@ namespace Sprint0 {
 			{
 				myGame.reset();
 			}
-			
 
+			int topOfInventory = 179;
+			int bottomOfInventory = 244;
+			int leftMostOfInventory = 505;
+			int rightMostOfInventory = 769;
 			if (kstate.IsKeyDown(Keys.W) || kstate.IsKeyDown(Keys.Up))
 			{
-				levelManager.Player.ChangeDirection(Player.Directions.Up);
+				if (myGame.CurrentState.IsInventory)
+				{
+					if(myGame.CurrentState.BoxPositionY - 65 >= topOfInventory)
+                    {
+						myGame.CurrentState.BoxPositionY -= 65;
+					}
+				}
+                else
+                {
+					levelManager.Player.ChangeDirection(Player.Directions.Up);
+				}
 			}
 			else if (kstate.IsKeyDown(Keys.A) || kstate.IsKeyDown(Keys.Left))
 			{
-				levelManager.Player.ChangeDirection(Player.Directions.Left);
+				if (myGame.CurrentState.IsInventory)
+				{
+					if (myGame.CurrentState.BoxPositionX - 88 >= leftMostOfInventory)
+					{
+						myGame.CurrentState.BoxPositionX -= 88;
+					}
+				}
+				else
+				{
+					levelManager.Player.ChangeDirection(Player.Directions.Left);
+				}
 			}
 			else if (kstate.IsKeyDown(Keys.S) || kstate.IsKeyDown(Keys.Down))
 			{
-				levelManager.Player.ChangeDirection(Player.Directions.Down);
+				if (myGame.CurrentState.IsInventory)
+				{
+					if (myGame.CurrentState.BoxPositionY + 65 <= bottomOfInventory)
+					{
+						myGame.CurrentState.BoxPositionY += 65;
+					}
+				}
+				else
+				{
+					levelManager.Player.ChangeDirection(Player.Directions.Down);
+				}
 			}
 			else if (kstate.IsKeyDown(Keys.D) || kstate.IsKeyDown(Keys.Right))
 			{
-				levelManager.Player.ChangeDirection(Player.Directions.Right);
+				if (myGame.CurrentState.IsInventory)
+				{
+					if (myGame.CurrentState.BoxPositionX + 88 <= rightMostOfInventory)
+					{
+						myGame.CurrentState.BoxPositionX += 88;
+					}
+				}
+				else
+				{
+					levelManager.Player.ChangeDirection(Player.Directions.Right);
+				}
 			}
 			else if (AllMovementKeysUp()) {
-				levelManager.Player.ChangeDirection(Player.Directions.Idle);
+				
+					levelManager.Player.ChangeDirection(Player.Directions.Idle);
 			}
 
 			if (HasBeenPressed(Keys.Z) || HasBeenPressed(Keys.N))
