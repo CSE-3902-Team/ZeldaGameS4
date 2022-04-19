@@ -245,8 +245,8 @@ namespace Sprint0
             boomerang = false;
             clock = false;
 
-            currentB_slot = new Rectangle(0, 0, 1, 1);
-            currentB_slot_HUD = new Rectangle(0, 0, 1, 1);
+            currentB_slot = new Rectangle(10, 10, 0, 0);
+            currentB_slot_HUD = new Rectangle(0, 0, 0, 0);
         }
 
         public void Update()

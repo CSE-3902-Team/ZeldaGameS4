@@ -116,7 +116,7 @@ namespace Sprint0.StateClass
 
         const int heartXDestLocation = 706;
         const int slotA_XDestLocation = 602;
-        const int slotB_XDestLocation = 506;
+        const int slotB_XDestLocation = 505;
         const int numberXDestLocation = 384;
         const int mapAndCompassXDestLocation = 180;
         const int mapDesignXDestLocation = 500;

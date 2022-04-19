@@ -50,64 +50,8 @@ namespace Sprint0 {
 			previousState = kstate;
 			kstate = Keyboard.GetState();
 			
-				/*if (HasBeenPressed(Keys.O))
-				{
-					enemyCount--;
-					if (enemyCount == -1)
-					{
-						enemyCount = 6;
-					}
-					else if (enemyCount == 7)
-						enemyCount = 2;
-					myGame.currentEnemy = myGame.enemyList[enemyCount];
-
-
-
-
-
-
-				}
-
-				else if  (HasBeenPressed(Keys.P))
-					{
-
-					enemyCount++;
-					if (enemyCount == 7)
-					{
-						enemyCount = 0;
-					}
-					else if (enemyCount == -1)
-						enemyCount = 1;
-					myGame.currentEnemy = myGame.enemyList[enemyCount];
-
-				}*/
-
-				//tile controls
-				/*if (HasBeenPressed(Keys.T))
-				{
-					count--;
-					if (count == -1)
-					{
-						count = myGame.TileList.Length - 1;
-					}
-					myGame.CurrentTile = myGame.TileList[count];
-
-				}
-				if (HasBeenPressed(Keys.Y))
-				{
-					count++;
-					if (count == myGame.TileList.Length || count == -1)
-					{
-						count = 0;
-					}
-					myGame.CurrentTile = myGame.TileList[count];
-
-
-				}
-				*/
-				//item keys
+				
 				if (HasBeenPressed(Keys.U)) {
-				//myGame.shownItem = myGame.itemFactoryPublic.previousItem();
 			}
 			else if (HasBeenPressed(Keys.I))
 			{
