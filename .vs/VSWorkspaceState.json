@@ -1,8 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\Collision"
+    ""
   ],
-  "SelectedNode": "\\Collision\\CollisionHandlerPlayerDoor.cs",
+  "SelectedNode": "\\KeyboardController.cs",
   "PreviewInSolutionExplorer": false
 }

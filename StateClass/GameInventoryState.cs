@@ -53,6 +53,8 @@ namespace Sprint0.StateClass
         private Rectangle locationSquareDestRect;
         private Rectangle boxDestRect;
         private Rectangle currentB_SlotItem;
+        private Vector2 boxPosition;
+
 
         const int heartWidth = 64;
         const int heartHeight = 73;
@@ -73,8 +75,6 @@ namespace Sprint0.StateClass
 
         const int slotWidth = 46;
         const int slotHeight = 85;
-        const int inventorySlotsWidth = 78;
-        const int inventorySlotsHeight = 65;
         const int spaceBetweenSlots = 10;
 
         const int colorBoxesWidth = 80;
@@ -173,12 +173,14 @@ namespace Sprint0.StateClass
             compassDestRect = new Rectangle(mapAndCompassXDestLocation, compassYDestLocation, compassWidth, mapAndCompassHeight);
             otherMapDestRect = new Rectangle(otherMapXDestLocation, otherMapYDestLocation, otherMapWidth, otherMapHeight);
             locationSquareDestRect = new Rectangle(locationSquareX, locationSquareY, locationSquareSize, locationSquareSize);
-            boxDestRect = new Rectangle(BoxPositionX, BoxPositionY, inventorySlotsWidth, inventorySlotsHeight);
+            boxDestRect = new Rectangle((int)InventoryBoxPosition.X, (int)InventoryBoxPosition.Y, inventorySlotsWidth, inventorySlotsHeight);
             currentB_SlotItem = _inventory.CurrentB_Slot;
 
             frame = 0;
 
         }
+
+        
         public override void loadContent()
         {
             screen = _content.Load<Texture2D>("Inventory");
@@ -189,8 +191,10 @@ namespace Sprint0.StateClass
         {
             _game.MouseController.handleInput();
             _game.KeyboardController.handleInput();
-            boxDestRect = new Rectangle(BoxPositionX, BoxPositionY, inventorySlotsWidth, inventorySlotsHeight);
+            boxDestRect = new Rectangle((int)InventoryBoxPosition.X, (int)InventoryBoxPosition.Y, inventorySlotsWidth, inventorySlotsHeight);
+
         }
+
 
         public override void Draw(GameTime gameTime)
         {

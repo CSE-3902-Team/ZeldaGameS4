@@ -82,13 +82,13 @@ namespace Sprint0 {
 			{
 				if (myGame.CurrentState.IsInventory)
 				{
-					if(myGame.CurrentState.BoxPositionY - 65 >= topOfInventory)
-                    {
-						myGame.CurrentState.BoxPositionY -= 65;
-					}
+						if (myGame.CurrentState.InventoryBoxPosition.Y - 65 >= topOfInventory)
+						{
+						    myGame.CurrentState.MoveBox(0, -1);
+						}
 				}
-                else
-                {
+				else
+				{
 					levelManager.Player.ChangeDirection(Player.Directions.Up);
 				}
 			}
@@ -96,9 +96,9 @@ namespace Sprint0 {
 			{
 				if (myGame.CurrentState.IsInventory)
 				{
-					if (myGame.CurrentState.BoxPositionX - 88 >= leftMostOfInventory)
+					if (myGame.CurrentState.InventoryBoxPosition.X - 88 >= leftMostOfInventory)
 					{
-						myGame.CurrentState.BoxPositionX -= 88;
+						myGame.CurrentState.MoveBox(-1, 0);
 					}
 				}
 				else
@@ -110,9 +110,9 @@ namespace Sprint0 {
 			{
 				if (myGame.CurrentState.IsInventory)
 				{
-					if (myGame.CurrentState.BoxPositionY + 65 <= bottomOfInventory)
+					if (myGame.CurrentState.InventoryBoxPosition.Y + 65 <= bottomOfInventory)
 					{
-						myGame.CurrentState.BoxPositionY += 65;
+						myGame.CurrentState.MoveBox(0, 1);
 					}
 				}
 				else
@@ -124,9 +124,9 @@ namespace Sprint0 {
 			{
 				if (myGame.CurrentState.IsInventory)
 				{
-					if (myGame.CurrentState.BoxPositionX + 88 <= rightMostOfInventory)
+					if (myGame.CurrentState.InventoryBoxPosition.X + 88 <= rightMostOfInventory)
 					{
-						myGame.CurrentState.BoxPositionX += 88;
+						myGame.CurrentState.MoveBox(1, 0);
 					}
 				}
 				else
@@ -135,8 +135,15 @@ namespace Sprint0 {
 				}
 			}
 			else if (AllMovementKeysUp()) {
-				
+
+				if (myGame.CurrentState.IsInventory)
+				{
+					//so box position does not change
+				}
+				else
+				{
 					levelManager.Player.ChangeDirection(Player.Directions.Idle);
+				}
 			}
 
 			if (HasBeenPressed(Keys.Z) || HasBeenPressed(Keys.N))
