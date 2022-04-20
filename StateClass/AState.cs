@@ -70,7 +70,7 @@ namespace Sprint0
         {
             _game = game;
             _content = content;
-            boxPosition = new Vector2(505, 179);
+            boxPosition = new Vector2(505, 180);
         }
         public void MoveBox(int x, int y)
         {

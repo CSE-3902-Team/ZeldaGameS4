@@ -49,7 +49,12 @@ namespace Sprint0 {
 		public void handleInput() {
 			previousState = kstate;
 			kstate = Keyboard.GetState();
-				
+
+			int topOfInventory = 180;
+			int bottomOfInventory = 245;
+			int leftMostOfInventory = 505;
+			int rightMostOfInventory = 780;
+
 			if (HasBeenPressed(Keys.I))
 			{
 				if (inventoryOpen)
@@ -63,6 +68,40 @@ namespace Sprint0 {
 					inventoryOpen = true;
 				}
 			}
+            if (myGame.CurrentState.IsInventory)
+            {
+				if (HasBeenPressed(Keys.W) || HasBeenPressed(Keys.Up))
+				{
+					if (myGame.CurrentState.InventoryBoxPosition.Y - 65 >= topOfInventory)
+					{
+						myGame.CurrentState.MoveBox(0, -1);
+					}
+				}
+
+				if (HasBeenPressed(Keys.A) || HasBeenPressed(Keys.Left))
+				{
+					if (myGame.CurrentState.InventoryBoxPosition.X - 88 >= leftMostOfInventory)
+					{
+						myGame.CurrentState.MoveBox(-1, 0);
+					}
+				}
+
+				if (HasBeenPressed(Keys.S) || HasBeenPressed(Keys.Down))
+				{
+					if (myGame.CurrentState.InventoryBoxPosition.Y + 65 <= bottomOfInventory)
+					{
+						myGame.CurrentState.MoveBox(0, 1);
+					}
+				}
+
+				if (HasBeenPressed(Keys.D) || HasBeenPressed(Keys.Right))
+				{
+					if (myGame.CurrentState.InventoryBoxPosition.X + 88 <= rightMostOfInventory)
+					{
+						myGame.CurrentState.MoveBox(1, 0);
+					}
+				}
+			}
 
 			if (HasBeenPressed(Keys.E))
 			{
@@ -74,76 +113,34 @@ namespace Sprint0 {
 				myGame.reset();
 			}
 
-			int topOfInventory = 179;
-			int bottomOfInventory = 244;
-			int leftMostOfInventory = 505;
-			int rightMostOfInventory = 769;
 			if (kstate.IsKeyDown(Keys.W) || kstate.IsKeyDown(Keys.Up))
 			{
-				if (myGame.CurrentState.IsInventory)
-				{
-						if (myGame.CurrentState.InventoryBoxPosition.Y - 65 >= topOfInventory)
-						{
-						    myGame.CurrentState.MoveBox(0, -1);
-						}
-				}
-				else
-				{
-					levelManager.Player.ChangeDirection(Player.Directions.Up);
-				}
+				
+				levelManager.Player.ChangeDirection(Player.Directions.Up);
+				
 			}
 			else if (kstate.IsKeyDown(Keys.A) || kstate.IsKeyDown(Keys.Left))
 			{
-				if (myGame.CurrentState.IsInventory)
-				{
-					if (myGame.CurrentState.InventoryBoxPosition.X - 88 >= leftMostOfInventory)
-					{
-						myGame.CurrentState.MoveBox(-1, 0);
-					}
-				}
-				else
-				{
-					levelManager.Player.ChangeDirection(Player.Directions.Left);
-				}
+
+				levelManager.Player.ChangeDirection(Player.Directions.Left);
+				
 			}
 			else if (kstate.IsKeyDown(Keys.S) || kstate.IsKeyDown(Keys.Down))
 			{
-				if (myGame.CurrentState.IsInventory)
-				{
-					if (myGame.CurrentState.InventoryBoxPosition.Y + 65 <= bottomOfInventory)
-					{
-						myGame.CurrentState.MoveBox(0, 1);
-					}
-				}
-				else
-				{
-					levelManager.Player.ChangeDirection(Player.Directions.Down);
-				}
+				
+				levelManager.Player.ChangeDirection(Player.Directions.Down);
+				
 			}
 			else if (kstate.IsKeyDown(Keys.D) || kstate.IsKeyDown(Keys.Right))
 			{
-				if (myGame.CurrentState.IsInventory)
-				{
-					if (myGame.CurrentState.InventoryBoxPosition.X + 88 <= rightMostOfInventory)
-					{
-						myGame.CurrentState.MoveBox(1, 0);
-					}
-				}
-				else
-				{
-					levelManager.Player.ChangeDirection(Player.Directions.Right);
-				}
+				
+				levelManager.Player.ChangeDirection(Player.Directions.Right);
+				
 			}
 			else if (AllMovementKeysUp()) {
 
-				if (myGame.CurrentState.IsInventory)
-				{
-					//so box position does not change
-				}
-				else
-				{
-					levelManager.Player.ChangeDirection(Player.Directions.Idle);
-				}
+				levelManager.Player.ChangeDirection(Player.Directions.Idle);
+				
 			}
 
 			if (HasBeenPressed(Keys.Z) || HasBeenPressed(Keys.N))
