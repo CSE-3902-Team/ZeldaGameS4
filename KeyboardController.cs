@@ -92,6 +92,10 @@ namespace Sprint0 {
 					(myGame.CurrentState as GameInventoryState).MoveBox(1, 0, Keys.Right);
 					
 				}
+                if (HasBeenPressed(Keys.Enter))
+                {
+				//	(myGame.CurrentState as GameInventoryState).
+				}
 			}
 
 			if (HasBeenPressed(Keys.E))

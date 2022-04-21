@@ -53,6 +53,7 @@ namespace Sprint0.StateClass
         private Rectangle locationSquareDestRect;
         private Rectangle boxDestRect;
         private Rectangle currentB_SlotItem;
+        private Rectangle itemSelectionSlot;
         private Rectangle boomerangDestRect;
         private Rectangle bombDestRect;
         private Rectangle arrowDestRect;
@@ -102,6 +103,8 @@ namespace Sprint0.StateClass
         const int inventorySlotsWidth = 90;
         const int inventorySlotsHeight = 65;
 
+        const int itemSelectionSlotSize = 70;
+
         const int heartAndNumberYSourceLocation = 1142;
         const int timesSymbolYSourceLocation = 1178;
         const int compassAndMapYSourceLocation = 1059;
@@ -131,7 +134,9 @@ namespace Sprint0.StateClass
         const int mapDesignXDestLocation = 500;
         const int levelNumberXDestLocation = 135;
         const int otherMapXDestLocation = 26;
-        
+        const int itemSelectionSlotXDestLocation = 250;
+        const int itemSelectionSlotYDestLocation = 180;
+
         const int heartYDestLocation = 854;
         const int slotsYDestLocation = 815;
         const int rupeeYDestLocation = 781;
@@ -144,12 +149,19 @@ namespace Sprint0.StateClass
         const int otherMapYDestLocation = 748;
 
         private int frame;
+        private int currentItemIndexX;
+        private int currentItemIndexY;
+        private LinkInventory.Items[,] itemPositionIndex;
+        private LinkInventory.Items currentB_slot_item;
 
-       
         public Vector2 InventoryBoxPosition
         {
             get { return boxPosition; }
             set { boxPosition = value; }
+        }
+        public LinkInventory.Items CurrentB_Slot_Item
+        {
+            get { return currentB_slot_item; }
         }
         public GameInventoryState(Game1 game, ContentManager content) : base(game, content)
         {
@@ -197,7 +209,13 @@ namespace Sprint0.StateClass
             arrowDestRect = new Rectangle((itemsInventoryXDestLocation + (inventorySlotsWidth * 2)), itemsInventoryYDestLocation, arrowWidth, inventorySlotsHeight);
             bowDestRect = new Rectangle((itemsInventoryXDestLocation + (inventorySlotsWidth * 2) + arrowWidth), itemsInventoryYDestLocation, (inventorySlotsWidth - arrowWidth), inventorySlotsHeight);
             currentB_SlotItem = _inventory.CurrentB_Slot;
+            itemSelectionSlot = new Rectangle(itemSelectionSlotXDestLocation, itemSelectionSlotYDestLocation, itemSelectionSlotSize, itemSelectionSlotSize);
 
+            currentItemIndexX = (int)((InventoryBoxPosition.X - itemsInventoryXDestLocation) / inventorySlotsWidth);
+            currentItemIndexY = (int)((InventoryBoxPosition.Y - itemsInventoryYDestLocation) / inventorySlotsHeight);
+
+            itemPositionIndex = _inventory.ItemPositionIndex;
+            currentB_slot_item = _inventory.ItemPositionIndex[currentItemIndexX, currentItemIndexY];
             frame = 0;
 
         }
@@ -251,6 +269,9 @@ namespace Sprint0.StateClass
             _game.MouseController.handleInput();
             _game.KeyboardController.handleInput();
             boxDestRect = new Rectangle((int)InventoryBoxPosition.X, (int)InventoryBoxPosition.Y, inventorySlotsWidth, inventorySlotsHeight);
+            currentItemIndexX = (int)((InventoryBoxPosition.X - itemsInventoryXDestLocation) / inventorySlotsWidth);
+            currentItemIndexY = (int)((InventoryBoxPosition.Y - itemsInventoryYDestLocation) / inventorySlotsHeight);
+            currentB_slot_item = _inventory.ItemPositionIndex[currentItemIndexX, currentItemIndexY];
 
         }
 
@@ -279,8 +300,10 @@ namespace Sprint0.StateClass
             _game.SpriteBatch.Draw(screen, levelNumberDestRect, new Rectangle(numberXSourceLocation + (_inventory.LevelNumber * numberWidth) + (_inventory.LevelNumber * spaceBetweenNumbers), heartAndNumberYSourceLocation, numberWidth, numberHeight), Color.White);
             _game.SpriteBatch.Draw(screen, slotADestRect, swordSourceRect, Color.White);
             _game.SpriteBatch.Draw(screen, slotBDestRect, currentB_SlotItem, Color.White);
+            _game.SpriteBatch.Draw(screen, itemSelectionSlot, currentB_SlotItem, Color.White);
 
-            if(frame % 50 > 20)
+
+            if (frame % 50 > 20)
             {
                 _game.SpriteBatch.Draw(screen, boxDestRect, redBoxSourceRect, Color.White);
             }
@@ -300,6 +323,25 @@ namespace Sprint0.StateClass
             {
                 _game.SpriteBatch.Draw(screen, bowDestRect, bowSourceRect, Color.White);
             }
+
+            if(CurrentB_Slot_Item is LinkInventory.Items.Boomerang && _inventory.Boomerang)
+            {
+                currentB_SlotItem = boomerangSourceRect;
+            }
+
+            if (CurrentB_Slot_Item is LinkInventory.Items.Bomb && _inventory.BombCount > 0)
+            {
+                currentB_SlotItem = bombSourceRect;
+            }
+            if (CurrentB_Slot_Item is LinkInventory.Items.BowAndArrow && _inventory.Bow)
+            {
+                currentB_SlotItem = bowSourceRect;
+            }
+            if (CurrentB_Slot_Item is LinkInventory.Items.None)
+            {
+                currentB_SlotItem = new Rectangle(10, 10, 0, 0);
+            }
+
             int remainingNumberSpaces = 2;
             for (int i = 1; i <= remainingNumberSpaces; i++)
             {

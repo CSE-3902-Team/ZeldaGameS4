@@ -45,6 +45,7 @@ namespace Sprint0
         private Rectangle currentB_slot;
         private Rectangle currentB_slot_HUD;
 
+        private Items[,] itemPositionIndex; 
 
         public int LevelNumber
         {
@@ -210,12 +211,17 @@ namespace Sprint0
             set { currentB_slot_HUD = value; }
         }
 
+        public Items[,] ItemPositionIndex
+        {
+            get { return itemPositionIndex; }
+        }
+       
         public enum Items
         {
             Boomerang,
             Bomb,
-            Arrow,
-            Bow
+            BowAndArrow,
+            None
         }
         public LinkInventory(Player player)
         {
@@ -254,6 +260,8 @@ namespace Sprint0
 
             currentB_slot = new Rectangle(10, 10, 0, 0);
             currentB_slot_HUD = new Rectangle(0, 0, 0, 0);
+
+            itemPositionIndex = new Items[,] { { Items.Boomerang, Items.None }, { Items.Bomb, Items.None }, { Items.BowAndArrow, Items.None }, { Items.None, Items.None } };
         }
 
         public void Update()
