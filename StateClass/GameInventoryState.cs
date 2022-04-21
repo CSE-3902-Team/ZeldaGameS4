@@ -352,13 +352,14 @@ namespace Sprint0.StateClass
             {
                 _game.SpriteBatch.Draw(screen, bombDestRect, bombSourceRect, Color.White);
             }
-            if (_inventory.ArrowCount > 0)
-            {
-                _game.SpriteBatch.Draw(screen, arrowDestRect, arrowSourceRect, Color.White);
-            }
+           
             if (_inventory.Bow)
             {
                 _game.SpriteBatch.Draw(screen, bowDestRect, bowSourceRect, Color.White);
+                if (_inventory.ArrowCount > 0)
+                {
+                    _game.SpriteBatch.Draw(screen, arrowDestRect, arrowSourceRect, Color.White);
+                }
             }
 
             if ((CurrentB_Slot_Item is LinkInventory.Items.Bomb) && _inventory.BombCount > 0)
