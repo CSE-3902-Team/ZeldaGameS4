@@ -269,23 +269,33 @@ namespace Sprint0.StateClass
 
         public void Select(LinkInventory.Items item)
         {
-            if(item is LinkInventory.Items.Boomerang)
+            if(item is LinkInventory.Items.Boomerang && _inventory.Boomerang)
             {
                 selectedItem = boomerangSourceRect;
-
-            }else if(item is LinkInventory.Items.Bomb)
+                _inventory.Selected_Item = item;
+            }
+            else if(item is LinkInventory.Items.Bomb && _inventory.BombCount > 0)
             {
                 selectedItem = bombSourceRect;
+                _inventory.Selected_Item = item;
             }
-            else if (item is LinkInventory.Items.BowAndArrow)
+            else if (item is LinkInventory.Items.BowAndArrow && _inventory.Bow)
             {
                 selectedItem = bowSourceRect;
+                _inventory.Selected_Item = item;
+
             }
             else if (item is LinkInventory.Items.None)
             {
                 selectedItem = new Rectangle(10, 10, 0, 0);
+                _inventory.Selected_Item = item;
+
             }
-            _inventory.Selected_Item = item;
+            else
+            {
+                selectedItem = new Rectangle(10, 10, 0, 0);
+                _inventory.Selected_Item = LinkInventory.Items.None;
+            }
         }
         public override void loadContent()
         {
@@ -354,7 +364,6 @@ namespace Sprint0.StateClass
             if ((CurrentB_Slot_Item is LinkInventory.Items.Bomb) && _inventory.BombCount > 0)
             {
                 currentB_SlotItemSourceRect = bombSourceRect;
-
             }
             else if ((CurrentB_Slot_Item is LinkInventory.Items.BowAndArrow) && _inventory.Bow)
             {
