@@ -94,7 +94,7 @@ namespace Sprint0 {
 				}
                 if (HasBeenPressed(Keys.Enter))
                 {
-				//	(myGame.CurrentState as GameInventoryState).
+					(myGame.CurrentState as GameInventoryState).Select((myGame.CurrentState as GameInventoryState).CurrentB_Slot_Item);
 				}
 			}
 

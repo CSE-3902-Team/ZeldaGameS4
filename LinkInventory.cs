@@ -45,7 +45,8 @@ namespace Sprint0
         private Rectangle currentB_slot;
         private Rectangle currentB_slot_HUD;
 
-        private Items[,] itemPositionIndex; 
+        private Items[,] itemPositionIndex;
+        private Items selectedItem;
 
         public int LevelNumber
         {
@@ -215,6 +216,11 @@ namespace Sprint0
         {
             get { return itemPositionIndex; }
         }
+        public Items Selected_Item
+        {
+            get { return selectedItem; }
+            set { selectedItem = value; }
+        }
        
         public enum Items
         {
@@ -260,6 +266,8 @@ namespace Sprint0
 
             currentB_slot = new Rectangle(10, 10, 0, 0);
             currentB_slot_HUD = new Rectangle(0, 0, 0, 0);
+
+            selectedItem = Items.None;
 
             itemPositionIndex = new Items[2,4] { { Items.Boomerang, Items.Bomb, Items.BowAndArrow, Items.None }, {Items.None, Items.None, Items.None,Items.None} };
         }

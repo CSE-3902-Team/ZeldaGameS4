@@ -267,6 +267,26 @@ namespace Sprint0.StateClass
             }
         }
 
+        public void Select(LinkInventory.Items item)
+        {
+            if(item is LinkInventory.Items.Boomerang)
+            {
+                selectedItem = boomerangSourceRect;
+
+            }else if(item is LinkInventory.Items.Bomb)
+            {
+                selectedItem = bombSourceRect;
+            }
+            else if (item is LinkInventory.Items.BowAndArrow)
+            {
+                selectedItem = bowSourceRect;
+            }
+            else if (item is LinkInventory.Items.None)
+            {
+                selectedItem = new Rectangle(10, 10, 0, 0);
+            }
+            _inventory.Selected_Item = item;
+        }
         public override void loadContent()
         {
             screen = _content.Load<Texture2D>("Inventory");
@@ -349,7 +369,7 @@ namespace Sprint0.StateClass
                 currentB_SlotItemSourceRect = new Rectangle(10, 10, 0, 0);
             }      
 
-            _game.SpriteBatch.Draw(screen, slotBDestRect, currentB_SlotItemSourceRect, Color.White);
+            _game.SpriteBatch.Draw(screen, slotBDestRect, selectedItem, Color.White);
             _game.SpriteBatch.Draw(screen, itemSelectionSlot, currentB_SlotItemSourceRect, Color.White);
 
             int remainingNumberSpaces = 2;
