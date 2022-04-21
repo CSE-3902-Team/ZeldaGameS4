@@ -323,20 +323,34 @@ namespace Sprint0.StateClass
             {
                 _game.SpriteBatch.Draw(screen, bowDestRect, bowSourceRect, Color.White);
             }
-
+            
             if(CurrentB_Slot_Item is LinkInventory.Items.Boomerang && _inventory.Boomerang)
             {
                 currentB_SlotItem = boomerangSourceRect;
+            }
+            else
+            {
+                currentB_SlotItem = new Rectangle(10, 10, 0, 0);
             }
 
             if (CurrentB_Slot_Item is LinkInventory.Items.Bomb && _inventory.BombCount > 0)
             {
                 currentB_SlotItem = bombSourceRect;
             }
+            else
+            {
+                currentB_SlotItem = new Rectangle(10, 10, 0, 0);
+            }
+
             if (CurrentB_Slot_Item is LinkInventory.Items.BowAndArrow && _inventory.Bow)
             {
                 currentB_SlotItem = bowSourceRect;
             }
+            else
+            {
+                currentB_SlotItem = new Rectangle(10, 10, 0, 0);
+            }
+
             if (CurrentB_Slot_Item is LinkInventory.Items.None)
             {
                 currentB_SlotItem = new Rectangle(10, 10, 0, 0);
