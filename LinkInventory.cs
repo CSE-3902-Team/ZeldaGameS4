@@ -210,6 +210,13 @@ namespace Sprint0
             set { currentB_slot_HUD = value; }
         }
 
+        public enum Items
+        {
+            Boomerang,
+            Bomb,
+            Arrow,
+            Bow
+        }
         public LinkInventory(Player player)
         {
             this.player = player;

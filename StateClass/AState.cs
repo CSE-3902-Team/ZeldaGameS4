@@ -26,16 +26,7 @@ namespace Sprint0
         protected bool isVictory = false;
         protected bool isGameState = false;
         protected bool animate = false;
-        protected const int inventorySlotsWidth = 90;
-        protected const int inventorySlotsHeight = 65;
-        protected Vector2 boxPosition;
-
-
-        public Vector2 InventoryBoxPosition
-        {
-            get { return boxPosition; }
-            set { boxPosition = value; }
-        }
+       
         public Room CurrentRoom
         {
             get { return _currentRoom;  }
@@ -70,14 +61,8 @@ namespace Sprint0
         {
             _game = game;
             _content = content;
-            boxPosition = new Vector2(505, 180);
         }
-        public void MoveBox(int x, int y)
-        {
-            //x and y are directional vectors and should only be 0, 1, or -1
-            boxPosition.X += x * inventorySlotsWidth;
-            boxPosition.Y += y * inventorySlotsHeight;
-        }
+        
         public abstract void loadContent();
         public abstract void update(GameTime gameTime);
         public abstract void Draw(GameTime gameTime);

@@ -50,11 +50,6 @@ namespace Sprint0 {
 			previousState = kstate;
 			kstate = Keyboard.GetState();
 
-			int topOfInventory = 180;
-			int bottomOfInventory = 245;
-			int leftMostOfInventory = 505;
-			int rightMostOfInventory = 780;
-
 			if (HasBeenPressed(Keys.I))
 			{
 				if (inventoryOpen)
@@ -72,34 +67,30 @@ namespace Sprint0 {
             {
 				if (HasBeenPressed(Keys.W) || HasBeenPressed(Keys.Up))
 				{
-					if (myGame.CurrentState.InventoryBoxPosition.Y - 65 >= topOfInventory)
-					{
-						myGame.CurrentState.MoveBox(0, -1);
-					}
+					
+					(myGame.CurrentState as GameInventoryState).MoveBox(0, -1, Keys.Up);
+				
 				}
 
 				if (HasBeenPressed(Keys.A) || HasBeenPressed(Keys.Left))
 				{
-					if (myGame.CurrentState.InventoryBoxPosition.X - 88 >= leftMostOfInventory)
-					{
-						myGame.CurrentState.MoveBox(-1, 0);
-					}
+					
+					(myGame.CurrentState as GameInventoryState).MoveBox(-1, 0, Keys.Left);
+					
 				}
 
 				if (HasBeenPressed(Keys.S) || HasBeenPressed(Keys.Down))
 				{
-					if (myGame.CurrentState.InventoryBoxPosition.Y + 65 <= bottomOfInventory)
-					{
-						myGame.CurrentState.MoveBox(0, 1);
-					}
+					
+					(myGame.CurrentState as GameInventoryState).MoveBox(0, 1, Keys.Down);
+					
 				}
 
 				if (HasBeenPressed(Keys.D) || HasBeenPressed(Keys.Right))
 				{
-					if (myGame.CurrentState.InventoryBoxPosition.X + 88 <= rightMostOfInventory)
-					{
-						myGame.CurrentState.MoveBox(1, 0);
-					}
+					
+					(myGame.CurrentState as GameInventoryState).MoveBox(1, 0, Keys.Right);
+					
 				}
 			}
 

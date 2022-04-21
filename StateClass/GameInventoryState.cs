@@ -53,8 +53,12 @@ namespace Sprint0.StateClass
         private Rectangle locationSquareDestRect;
         private Rectangle boxDestRect;
         private Rectangle currentB_SlotItem;
+        private Rectangle boomerangDestRect;
+        private Rectangle bombDestRect;
+        private Rectangle arrowDestRect;
+        private Rectangle bowDestRect;
         private Vector2 boxPosition;
-
+        
 
         const int heartWidth = 64;
         const int heartHeight = 73;
@@ -86,14 +90,17 @@ namespace Sprint0.StateClass
         const int boomerangWidth = 40;
         const int boomerangHeight = 60;
 
-        const int bombWidth = 50;
+        const int bombWidth = 45;
         const int bombHeight = 75;
 
-        const int arrowWidth = 40;
+        const int arrowWidth = 30;
         const int arrowHeight = 85;
 
         const int bowWidth = 50;
         const int bowHeight = 90;
+
+        const int inventorySlotsWidth = 90;
+        const int inventorySlotsHeight = 65;
 
         const int heartAndNumberYSourceLocation = 1142;
         const int timesSymbolYSourceLocation = 1178;
@@ -109,11 +116,13 @@ namespace Sprint0.StateClass
         const int swordXSourceLocation = 173;
         const int blueSquareXSourceLocation = 82;
         const int boomerangXSourceLocation = 315;
-        const int bombXSourceLocation = 173;
+        const int bombXSourceLocation = 415;
         const int arrowXSourceLocation = 475;
         const int bowXSourceLocation = 556;
         const int boomerangYSourceLocation = 972;
 
+        const int itemsInventoryXDestLocation = 505;
+        const int itemsInventoryYDestLocation = 180;
         const int heartXDestLocation = 706;
         const int slotA_XDestLocation = 602;
         const int slotB_XDestLocation = 505;
@@ -136,6 +145,12 @@ namespace Sprint0.StateClass
 
         private int frame;
 
+       
+        public Vector2 InventoryBoxPosition
+        {
+            get { return boxPosition; }
+            set { boxPosition = value; }
+        }
         public GameInventoryState(Game1 game, ContentManager content) : base(game, content)
         {
             _game = game;
@@ -144,6 +159,7 @@ namespace Sprint0.StateClass
             _inventory = _levelManager.Player.Inventory;
             locationSquareX = _inventory.MapLocationX;
             locationSquareY = _inventory.MapLocationY;
+            boxPosition = new Vector2(505, 180);
 
             heartSourceRect = new Rectangle((heartWidth * 2) + (spaceBetweenHearts * 2), heartAndNumberYSourceLocation, heartWidth, heartHeight);
             halfHeartSourceRect = new Rectangle((heartWidth * 1) + (spaceBetweenHearts * 1), heartAndNumberYSourceLocation, heartWidth, heartHeight);
@@ -174,13 +190,56 @@ namespace Sprint0.StateClass
             otherMapDestRect = new Rectangle(otherMapXDestLocation, otherMapYDestLocation, otherMapWidth, otherMapHeight);
             locationSquareDestRect = new Rectangle(locationSquareX, locationSquareY, locationSquareSize, locationSquareSize);
             boxDestRect = new Rectangle((int)InventoryBoxPosition.X, (int)InventoryBoxPosition.Y, inventorySlotsWidth, inventorySlotsHeight);
+
+            //The +20 is to center it within its slot in the inventory
+            boomerangDestRect = new Rectangle((itemsInventoryXDestLocation + (inventorySlotsWidth * 0) + 20), itemsInventoryYDestLocation, boomerangWidth, boomerangHeight);
+            bombDestRect = new Rectangle((itemsInventoryXDestLocation + (inventorySlotsWidth* 1)) + 20, itemsInventoryYDestLocation, bombWidth, inventorySlotsHeight);
+            arrowDestRect = new Rectangle((itemsInventoryXDestLocation + (inventorySlotsWidth * 2)), itemsInventoryYDestLocation, arrowWidth, inventorySlotsHeight);
+            bowDestRect = new Rectangle((itemsInventoryXDestLocation + (inventorySlotsWidth * 2) + arrowWidth), itemsInventoryYDestLocation, (inventorySlotsWidth - arrowWidth), inventorySlotsHeight);
             currentB_SlotItem = _inventory.CurrentB_Slot;
 
             frame = 0;
 
         }
 
-        
+        public void MoveBox(int x, int y, Keys key)
+        {
+            //x and y are directional vectors and should only be 0, 1, or -1
+            int topOfInventory = 180;
+            int bottomOfInventory = 245;
+            int leftMostOfInventory = 505;
+            int rightMostOfInventory = 775;
+
+            if(key.Equals(Keys.Up))
+            {
+                if (InventoryBoxPosition.Y - inventorySlotsHeight >= topOfInventory)
+                {
+                    boxPosition.Y += y * inventorySlotsHeight;
+                }
+            }
+            if (key.Equals(Keys.Left))
+            {
+                if (InventoryBoxPosition.X - inventorySlotsWidth >= leftMostOfInventory)
+                {
+                    boxPosition.X += x * inventorySlotsWidth;
+                }
+            }
+            if (key.Equals(Keys.Down))
+            {
+                if (InventoryBoxPosition.Y + inventorySlotsHeight <= bottomOfInventory)
+                {
+                    boxPosition.Y += y * inventorySlotsHeight;
+                }
+            }
+            if (key.Equals(Keys.Right))
+            {
+                if (InventoryBoxPosition.X + inventorySlotsWidth <= rightMostOfInventory)
+                {
+                    boxPosition.X += x * inventorySlotsWidth;
+                }
+            }
+        }
+
         public override void loadContent()
         {
             screen = _content.Load<Texture2D>("Inventory");
@@ -194,7 +253,6 @@ namespace Sprint0.StateClass
             boxDestRect = new Rectangle((int)InventoryBoxPosition.X, (int)InventoryBoxPosition.Y, inventorySlotsWidth, inventorySlotsHeight);
 
         }
-
 
         public override void Draw(GameTime gameTime)
         {
@@ -226,7 +284,22 @@ namespace Sprint0.StateClass
             {
                 _game.SpriteBatch.Draw(screen, boxDestRect, redBoxSourceRect, Color.White);
             }
-
+            if (_inventory.Boomerang)
+            {
+                _game.SpriteBatch.Draw(screen, boomerangDestRect, boomerangSourceRect, Color.White);
+            }
+            if (_inventory.BombCount > 0)
+            {
+                _game.SpriteBatch.Draw(screen, bombDestRect, bombSourceRect, Color.White);
+            }
+            if (_inventory.ArrowCount > 0)
+            {
+                _game.SpriteBatch.Draw(screen, arrowDestRect, arrowSourceRect, Color.White);
+            }
+            if (_inventory.Bow)
+            {
+                _game.SpriteBatch.Draw(screen, bowDestRect, bowSourceRect, Color.White);
+            }
             int remainingNumberSpaces = 2;
             for (int i = 1; i <= remainingNumberSpaces; i++)
             {
