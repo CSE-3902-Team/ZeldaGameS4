@@ -200,18 +200,6 @@ namespace Sprint0
             set { mapSquareY = value; }
         }
 
-        public Rectangle CurrentB_Slot
-        {
-            get { return currentB_slot; }
-            set { currentB_slot = value; }
-        }
-
-        public Rectangle CurrentB_Slot_HUD
-        {
-            get { return currentB_slot_HUD; }
-            set { currentB_slot_HUD = value; }
-        }
-
         public Items[,] ItemPositionIndex
         {
             get { return itemPositionIndex; }
@@ -263,9 +251,6 @@ namespace Sprint0
             compass = false;
             boomerang = false;
             clock = false;
-
-            currentB_slot = new Rectangle(10, 10, 0, 0);
-            currentB_slot_HUD = new Rectangle(0, 0, 0, 0);
 
             selectedItem = Items.None;
 

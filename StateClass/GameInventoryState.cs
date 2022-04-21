@@ -209,7 +209,7 @@ namespace Sprint0.StateClass
             bombDestRect = new Rectangle((itemsInventoryXDestLocation + (inventorySlotsWidth* 1)) + 20, itemsInventoryYDestLocation, bombWidth, inventorySlotsHeight);
             arrowDestRect = new Rectangle((itemsInventoryXDestLocation + (inventorySlotsWidth * 2)), itemsInventoryYDestLocation, arrowWidth, inventorySlotsHeight);
             bowDestRect = new Rectangle((itemsInventoryXDestLocation + (inventorySlotsWidth * 2) + arrowWidth), itemsInventoryYDestLocation, (inventorySlotsWidth - arrowWidth), inventorySlotsHeight);
-            currentB_SlotItemSourceRect = _inventory.CurrentB_Slot;
+            currentB_SlotItemSourceRect = new Rectangle(10,10,0,0);
             itemSelectionSlot = new Rectangle(itemSelectionSlotXDestLocation, itemSelectionSlotYDestLocation, itemSelectionSlotSize, itemSelectionSlotSize);
             selectedItem = new Rectangle(10, 10, 0, 0);
 
@@ -283,7 +283,6 @@ namespace Sprint0.StateClass
             {
                 selectedItem = bowSourceRect;
                 _inventory.Selected_Item = item;
-
             }
             else if (item is LinkInventory.Items.None)
             {

@@ -66,11 +66,10 @@ namespace Sprint0
         const int levelNumberXDestLocation = 131;
         const int itemsRowYSourceLocation = 330;
         const int swordXSourceLocation = 173;
-        const int boomerangXSourceLocation = 315;
-        const int bombXSourceLocation = 173;
+        const int boomerangXSourceLocation = 319;
+        const int bombXSourceLocation = 415;
         const int arrowXSourceLocation = 475;
         const int bowXSourceLocation = 556;
-        const int boomerangYSourceLocation = 972;
         const int slotA_XDestLocation = 600;
         const int slotB_XDestLocation = 504;
         const int slotsYDestLocation = 106;
@@ -91,8 +90,8 @@ namespace Sprint0
         const int swordWidth = 41;
         const int swordHeight = 85;
 
-        const int boomerangWidth = 40;
-        const int boomerangHeight = 60;
+        const int boomerangWidth = 45;
+        const int boomerangHeight = 80;
 
         const int bombWidth = 50;
         const int bombHeight = 75;
@@ -141,7 +140,7 @@ namespace Sprint0
             timesSymbolSourceRect = new Rectangle(numberXSourceLocation, (heartAndNumberYSourceLocation + numberHeight), numberWidth, numberHeight);
             mapSourceRect = new Rectangle(0, mapYSourceLocation, mapWidth, mapHeight);
             swordSourceRect = new Rectangle(swordXSourceLocation, itemsRowYSourceLocation, swordWidth, swordHeight);
-            boomerangSourceRect = new Rectangle(boomerangXSourceLocation, boomerangYSourceLocation, boomerangWidth, boomerangHeight);
+            boomerangSourceRect = new Rectangle(boomerangXSourceLocation, itemsRowYSourceLocation, boomerangWidth, boomerangHeight);
             bombSourceRect = new Rectangle(bombXSourceLocation, itemsRowYSourceLocation, bombWidth, bombHeight);
             arrowSourceRect = new Rectangle(arrowXSourceLocation, itemsRowYSourceLocation, arrowWidth, arrowHeight);
             bowSourceRect = new Rectangle(bowXSourceLocation, itemsRowYSourceLocation, bowWidth, bowHeight);
@@ -155,7 +154,7 @@ namespace Sprint0
             locationSquareDestRect = new Rectangle(locationSquareX, locationSquareY, locationSquareSize, locationSquareSize);
             slotADestRect = new Rectangle(slotA_XDestLocation, slotsYDestLocation, slotWidth, slotHeight);
             slotBDestRect = new Rectangle(slotB_XDestLocation, slotsYDestLocation, slotWidth, slotHeight);
-            currentB_SlotItem = inventory.CurrentB_Slot_HUD;
+            currentB_SlotItem = new Rectangle(0,0,0,0);
 
         }
 
@@ -175,6 +174,7 @@ namespace Sprint0
         public void Draw()
         {
             Update();
+            Console.WriteLine(inventory.Selected_Item.ToString());
             spriteBatch.Begin();
             spriteBatch.Draw(headsUpDisplay, hudRectangle, hudRectangle, Color.White);
             spriteBatch.Draw(headsUpDisplay, rupeeNumberDestRect, timesSymbolSourceRect, Color.White);
@@ -182,7 +182,25 @@ namespace Sprint0
             spriteBatch.Draw(headsUpDisplay, keyNumberDestRect, timesSymbolSourceRect, Color.White);
             spriteBatch.Draw(headsUpDisplay, levelNumberDestRect, new Rectangle(numberXSourceLocation + (levelNumber*numberWidth) + (levelNumber*spaceBetweenNumbers), heartAndNumberYSourceLocation, numberWidth, numberHeight), Color.White);
             spriteBatch.Draw(headsUpDisplay, slotADestRect, swordSourceRect, Color.White);
+
+            if(inventory.Selected_Item is LinkInventory.Items.Bomb)
+            {
+                currentB_SlotItem = bombSourceRect;
+
+            }else if(inventory.Selected_Item is LinkInventory.Items.Boomerang)
+            {
+                currentB_SlotItem = boomerangSourceRect;
+            }
+            else if (inventory.Selected_Item is LinkInventory.Items.BowAndArrow)
+            {
+                currentB_SlotItem = bowSourceRect;
+            }
+            else if (inventory.Selected_Item is LinkInventory.Items.None)
+            {
+                currentB_SlotItem = new Rectangle(0, 0, 0, 0);
+            }
             spriteBatch.Draw(headsUpDisplay, slotBDestRect, currentB_SlotItem, Color.White);
+
 
             int remainingNumberSpaces = 2;
             for(int i = 1; i <= remainingNumberSpaces; i++)
