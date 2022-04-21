@@ -261,7 +261,7 @@ namespace Sprint0
             currentB_slot = new Rectangle(10, 10, 0, 0);
             currentB_slot_HUD = new Rectangle(0, 0, 0, 0);
 
-            itemPositionIndex = new Items[,] { { Items.Boomerang, Items.None }, { Items.Bomb, Items.None }, { Items.BowAndArrow, Items.None }, { Items.None, Items.None } };
+            itemPositionIndex = new Items[2,4] { { Items.Boomerang, Items.Bomb, Items.BowAndArrow, Items.None }, {Items.None, Items.None, Items.None,Items.None} };
         }
 
         public void Update()
